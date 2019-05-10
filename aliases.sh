@@ -2,15 +2,15 @@
 # Fred's bash aliases for TensorFlow development
 #
 # To activate the aliases in this file file, run 
-#   . ~/tf-def-conf/tf-aliases.sh
+#   . ~/tf-def-conf/aliases.sh
 # from the command-line prompt or from your .bashrc.
 #
 
 # Create a local branch for working on a TF issue
-alias tfb="${HOME}/tf-dev-conf/tf_branch.py -c"
+alias tfb="${HOME}/tf-dev-conf/branch.py -c"
 
 # Check out a branch created with tfb
-alias tfc="${HOME}/tf-dev-conf/tf_branch.py"
+alias tfc="${HOME}/tf-dev-conf/branch.py"
 
 # Create an Anaconda virtualenv for testing your builds of TensorFlow.
 # Virtualenv is created as $PWD/testenv
