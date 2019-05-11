@@ -36,11 +36,11 @@ environment for modifying the TensorFlow code.
    be `issue-my-pr-name`. Choose a name that will be memorable; larger pull requests can
    stay in the review queue for weeks or months.
 2. `cd tf-my-branch-name`
-3. `tfcc` (configures for compilation)
+3. `tfcc` (activates `tfbuild` environment and configures for compilation)
 4. `bbt`: Kick off a build/test cycle in the background while you make your code changes.
     This step will save you time later on.
 5. Make changes
-7. `git push` (create and push to your branch)
+7. `git push --set-upstream origin issue-my-pr-name` (create and push to your branch)
 
 **Phase 2a:** Manual testing on laptop:
 
@@ -50,15 +50,21 @@ environment for modifying the TensorFlow code.
 4. `~/tf-dev-conf/testenv.sh`
 5. `conda activate ./testenv`
 6. `pip install ./pip_package/*.whl`
-7. `jupyter lab` (to try out your changes)
+7. `cd ./testenv`: Can't run TensorFlow from the root of a TensorFlow source
+   tree.
+8. `jupyter lab` (to try out your changes)
 
 **Phase 2b:** Build/test on the cloud. These steps can run at the same time as 2a.
 
-1. Create a large virtual machine or container. I use a 56-core VM with 128GB of memory and local flash storage.
+1. Create a large virtual machine or container. I use a 56-core VM with 128GB of memory and 
+   local flash storage.
 2. Import this repository's scripts and configuration to your VM/container
 3. `tfc my-pr-name`: Check out a copy of your branch to the cloud machine.
-4. `bbd`: Run pre-commit sanity checks like `pylint`. Fix any problems that arise while the next step runs.
-5. `bbtd`: Full regression test suite from a Docker environment.
+4. `cd tf-my-pr-name`
+5. `tfcc`
+6. `bbd`: Run pre-commit sanity checks like `pylint`. Fix any problems that arise while the 
+   next step runs.
+7. `bbtd`: Full regression test suite from a Docker environment.
 
 **Phase 3:** Prepare PR:
 
@@ -67,7 +73,7 @@ environment for modifying the TensorFlow code.
 3. `git push --force`. Note that you will need to check out a fresh copy of your branch on your large cloud VM/container after this step by running `tfc my-branch-name` a second time.
 4. Go to github.com and create a pull request off the branch `issue-my-branch-name`.
 
-Phase 4: Maintain branch during review. On your laptop:
+**Phase 4:** Maintain branch during review. On your laptop:
 
 1. `conda activate tfbuild`
 2. `cd tf-my-branch-name`
