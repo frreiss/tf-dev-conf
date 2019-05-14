@@ -50,6 +50,9 @@ conda install -y portpicker grpcio scipy \
     keras-applications keras-preprocessing 
     #-c conda-forge
 
+# Other stuff needed for building from an IDE
+conda install -y pylint flake8
+
 # Some prereqs are only available from conda-forge
 conda install -y autograd \
     -c conda-forge

@@ -74,6 +74,8 @@ TEST_TARGET="${TEST_TARGET} -//tensorflow/compiler/..."
 TEST_TARGET="${TEST_TARGET} -//tensorflow/lite/..."
 TEST_TARGET="${TEST_TARGET} -//tensorflow/contrib/..."
 TEST_TARGET="${TEST_TARGET} -//tensorflow/core:platform_setround_test"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/autograph/pyct/..."
+
 
 # Note that output is teed to a file in case we exceed the screen buffer.
 BBT_COMMAND="bazel test ${BB_OPTS} --notest_verbose_timeout_warnings --keep_going ${EXCLUDE_TESTS} -- ${TEST_TARGET} | tee test.out"
