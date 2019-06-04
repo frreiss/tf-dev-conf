@@ -71,6 +71,9 @@ def main():
 
     run(["git", "checkout", branch_name])
 
+    # Set up IntelliJ config
+    os.mkdir(".ijwb")
+    run(["cp", os.environ["HOME"] + "/tf-dev-conf/tf.bazelproject", ".ijwb/.bazelproject"])
    
 
 if __name__ == '__main__':

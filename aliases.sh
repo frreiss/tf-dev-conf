@@ -6,15 +6,17 @@
 # from the command-line prompt or from your .bashrc.
 #
 
+TF_DEF_CONF="${HOME}/tf-dev-conf"
+
 # Create a local branch for working on a TF issue
-alias tfb="${HOME}/tf-dev-conf/branch.py -c"
+alias tfb="${TF_DEV_CONF}/branch.py -c"
 
 # Check out a branch created with tfb
-alias tfc="${HOME}/tf-dev-conf/branch.py"
+alias tfc="${TF_DEV_CONF}/branch.py"
 
 # Create an Anaconda virtualenv for testing your builds of TensorFlow.
 # Virtualenv is created as $PWD/testenv
-alias tft="${HOME}/tf-dev-conf/testenv.sh"
+alias tft="${TF_DEV_CONF}/testenv.sh"
 
 # Configure a local copy of TF prior to build, using defaults for all prompted
 # config parameters.

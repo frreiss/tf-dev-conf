@@ -1,0 +1,23 @@
+# Fred's master .bazelproject file.
+#
+# To use from IntelliJ: While importing a bazel project, when you reach the
+# "Select project view" step, select "Copy external" and select the
+# location of this file.
+
+directories:
+  .
+
+targets:
+  //tensorflow/tools/pip_package:build_pip_package
+
+test_sources:
+  tensorflow
+
+build_flags:
+  --config=opt
+
+additional_languages:
+  python
+  # Uncomment any additional languages you want supported
+  # android
+
