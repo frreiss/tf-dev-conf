@@ -6,7 +6,7 @@
 # from the command-line prompt or from your .bashrc.
 #
 
-TF_DEF_CONF="${HOME}/tf-dev-conf"
+TF_DEV_CONF="${HOME}/tf-dev-conf"
 
 # Create a local branch for working on a TF issue
 alias tfb="${TF_DEV_CONF}/branch.py -c"
