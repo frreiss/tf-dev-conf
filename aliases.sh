@@ -103,9 +103,14 @@ ADDL_HACK_OPTS="${ADDL_HACK_OPTS} --test_tag_filters=-no_oss,-oss_serial,-gpu,-b
 alias bbtt="time bazel test ${BB_OPTS} ${ADDL_HACK_OPTS} //tensorflow/contrib/..."
 
 
-# Linter. Run prior to making a PR. Logs to build.out because output length
-# often exceeds screen scrollback buffer size
-alias bbd="time tensorflow/tools/ci_build/ci_build.sh CPU tensorflow/tools/ci_build/ci_sanity.sh 2>&1| tee lint.out"
+# Quick and dirty Python linter.
+alias bbl="${TF_DEF_CONF}/pylint.sh"
+
+# Linter under Docker. This takes a while.
+BBD_COMMAND="time tensorflow/tools/ci_build/ci_build.sh GPU "
+BBD_COMMAND+="tensorflow/tools/ci_build/ci_sanity.sh "
+BBD_COMMAND+="2>&1 | tee lint.out"
+alias bbd=$BBD_COMMAND
 
 # Full CI suite from within Google Docker image.
 # Doesn't currently work on laptop.
