@@ -102,12 +102,14 @@ ADDL_HACK_OPTS="${ADDL_HACK_OPTS} --build_tests_only"
 ADDL_HACK_OPTS="${ADDL_HACK_OPTS} --test_tag_filters=-no_oss,-oss_serial,-gpu,-benchmark-test"
 alias bbtt="time bazel test ${BB_OPTS} ${ADDL_HACK_OPTS} //tensorflow/contrib/..."
 
+# Reformat a C++ file.
+alias tff="clang-format -style=Google"
 
 # Quick and dirty Python linter.
 alias bbl="${TF_DEF_CONF}/pylint.sh"
 
 # Linter under Docker. This takes a while.
-BBD_COMMAND="time tensorflow/tools/ci_build/ci_build.sh GPU "
+BBD_COMMAND="time tensorflow/tools/ci_build/ci_build.sh CPU "
 BBD_COMMAND+="tensorflow/tools/ci_build/ci_sanity.sh "
 BBD_COMMAND+="2>&1 | tee lint.out"
 alias bbd=$BBD_COMMAND
