@@ -14,8 +14,8 @@
 # location of the root of your anaconda/miniconda distribution.
 ################################################################################
 
-# Dockerfiles are all on Python 3.6, not 3.7
-PYTHON_VERSION=3.6
+# The TensorFlow CPU dockerfile runs Python 3.5.2
+PYTHON_VERSION=3.5.2
 
 ENV_NAME="tflint"
 
@@ -55,32 +55,32 @@ conda activate ${ENV_NAME}
 # Start out by downgrading pip to the same version used in the TF script.
 easy_install -U pip==18.1
 
-pip install --upgrade \
-    wheel==0.31.1 \
-    setuptools==39.1.0 \
-    virtualenv \
-    six==1.12.0 \
-    future>=0.17.1 \
-    absl-py \
-    werkzeug==0.11.10 \
-    bleach==2.0.0 \
-    markdown==2.6.8 \
-    protobuf==3.6.1 \
-    numpy==1.14.5 \
-    scipy==1.1.0 \
-    scikit-learn==0.18.1 \
-    pandas==0.19.2 \
-    psutil \
-    py-cpuinfo \
-    pylint==1.6.4 \
-    pycodestyle \
-    portpicker \
-    grpcio \
-    astor \
-    gast \
-    termcolor \
-    h5py==2.8.0 \
-    argparse 
+# Install packages one at a time to avoid a long pause
+pip install --upgrade wheel==0.31.1
+pip install --upgrade setuptools==39.1.0
+pip install --upgrade virtualenv
+pip install --upgrade six==1.12.0
+pip install --upgrade future>=0.17.1
+pip install --upgrade absl-py
+pip install --upgrade werkzeug==0.11.10
+pip install --upgrade bleach==2.0.0
+pip install --upgrade markdown==2.6.8
+pip install --upgrade protobuf==3.6.1
+pip install --upgrade numpy==1.14.5
+pip install --upgrade scipy==1.1.0
+pip install --upgrade scikit-learn==0.18.1
+pip install --upgrade pandas==0.19.2
+pip install --upgrade psutil
+pip install --upgrade py-cpuinfo
+pip install --upgrade pylint==1.6.4
+pip install --upgrade pycodestyle
+pip install --upgrade portpicker
+pip install --upgrade grpcio
+pip install --upgrade astor
+pip install --upgrade gast
+pip install --upgrade termcolor
+pip install --upgrade h5py==2.8.0
+pip install --upgrade argparse 
 
 # These dependencies are installed separately because they will change
 # frequently and need to be installed without dependent packages
@@ -88,6 +88,7 @@ pip install --upgrade \
 pip install keras_applications==1.0.6 --no-deps
 pip install keras_preprocessing==1.0.5 --no-deps
 pip install tf-estimator-nightly --no-deps
+
 
 conda deactivate
     
