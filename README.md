@@ -24,7 +24,11 @@ environment for modifying the TensorFlow code.
 * **aliases.sh**: Bash aliases for common TensorFlow develoment tasks
 * **branch.py**: Script to create a local development branch for a TensorFlow pull request
 * **buildenv.sh**: Script to configure an Anaconda environment on the local machine for building TensorFlow.
+* **lintenv.sh**: Script to create an Anaconda environment that replicates the
+  TensorFlow Docker containers' Python setup. Useful for running tools like `tensorflow/tools/ci_build/ci_sanity.sh` outside of Docker.
 * **testenv.sh**: Script to create an Anaconda environment under the current directory for testing your modified version of TensorFlow.
+* **tf.bazelproject**: Configuration file for setting up the Bazel integration
+  in IntelliJ/CLion. Import this file from the "import Bazel project" wizard.
 
 ### My Development Workflow
 
