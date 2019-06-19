@@ -34,7 +34,10 @@ HACK_OPTS="${HACK_OPTS} --config=opt"
 #HACK_OPTS="${HACK_OPTS} --incompatible_remove_native_http_archive=false"
 
 # Aggregate options together so alias strings are shorter.
-BB_OPTS="--jobs=${NPROC} ${HACK_OPTS}"
+# We used to set the "jobs" parameter, but recent versions of Bazel can set
+# that parameter correctly themselves.
+#BB_OPTS="--jobs=${NPROC} ${HACK_OPTS}"
+BB_OPTS="${HACK_OPTS}"
 
 # Build target for pip package prereqs. You still need to run the
 # build_pip_package script after running this target; see bbpp below.
@@ -75,8 +78,19 @@ TEST_TARGET="//tensorflow/..."
 TEST_TARGET="${TEST_TARGET} -//tensorflow/compiler/..."
 TEST_TARGET="${TEST_TARGET} -//tensorflow/lite/..."
 TEST_TARGET="${TEST_TARGET} -//tensorflow/contrib/..."
-TEST_TARGET="${TEST_TARGET} -//tensorflow/core:platform_setround_test"
-TEST_TARGET="${TEST_TARGET} -//tensorflow/python/autograph/pyct/..."
+
+# Tests that are consistently flaky on my machines
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/tpu:tpu_test"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/tpu:datasets_test"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/eager:remote_test"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/debug:dist_session_debug_grpc_test"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:values_test"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/autograph/pyct:inspect_utils_test_par"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/examples/speech_commands:freeze_test"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/core/kernels:eigen_mkldnn_contraction_kernel_test"
+#TEST_TARGET="${TEST_TARGET} -//tensorflow/core:platform_setround_test"
+#TEST_TARGET="${TEST_TARGET} -//tensorflow/core:platform_setround_test"
+#TEST_TARGET="${TEST_TARGET} -//tensorflow/python/autograph/pyct/..."
 
 
 # Note that output is teed to a file in case we exceed the screen buffer.

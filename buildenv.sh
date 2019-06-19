@@ -46,8 +46,9 @@ conda activate ${ENV_NAME}
 # Install unofficial requirements, i.e. not mentioned in the docs, but tests
 # will fail without them.
 # TODO: Revisit these periodically
-conda install -y portpicker grpcio scipy \
-    keras-applications keras-preprocessing 
+conda install -y portpicker grpcio scipy 
+
+    #keras-applications keras-preprocessing 
     #-c conda-forge
 
 # Other stuff needed for building from an IDE
@@ -60,16 +61,12 @@ conda install -y autograd \
 # Additional requirements for running the tests under contrib
 conda install -y scikit-learn
 
-# Requirements that must be installed from pip because the conda version is
-# not kept sufficiently up to date. TODO: Revisit this list and move things to
-# conda install.
-pip install tensorflow-estimator
+# Requirements that are installed from pip so we can avoid pulling in
+# dependencies. Use the specific versions that the TF Docker images use
+pip install keras_applications==1.0.6 --no-deps
+pip install keras_preprocessing==1.0.5 --no-deps
+pip install tf-estimator-nightly --no-deps 
 
-
-# Install TensorFlow and keras-applications, both of which are also unofficial
-# requirements. We install them from pip because the version in conda-forge is
-# sometimes too old to work with the master build of TF.
-#pip install tensorflow tensorflow-estimator keras-applications
 
 conda deactivate
     
