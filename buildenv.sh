@@ -46,7 +46,7 @@ conda activate ${ENV_NAME}
 # Install unofficial requirements, i.e. not mentioned in the docs, but tests
 # will fail without them.
 # TODO: Revisit these periodically
-conda install -y portpicker grpcio scipy 
+conda install -y portpicker grpcio scipy h5py
 
     #keras-applications keras-preprocessing 
     #-c conda-forge

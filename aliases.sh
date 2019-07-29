@@ -23,7 +23,7 @@ alias tft="${TF_DEV_CONF}/testenv.sh"
 alias tfcc="conda activate tfbuild && bazel clean && yes '' | ./configure"
 
 # How many subprocesses to run for TF builds
-NPROC=`getconf _NPROCESSORS_ONLN`
+#NPROC=`getconf _NPROCESSORS_ONLN`
 
 # Extra Bazel options required to get the build to work on my machines.
 # These change regularly.
@@ -33,11 +33,20 @@ HACK_OPTS="${HACK_OPTS} --config=opt"
 #HACK_OPTS="${HACK_OPTS} --define=grpc_no_ares=true"
 #HACK_OPTS="${HACK_OPTS} --incompatible_remove_native_http_archive=false"
 
+# On VMs, the number of detected CPUs is the number of cores. On bare metal,
+# the number of detected CPUs is the number of threads. Divide by 2 to avoid
+# thrashing when on bare metal. 
+if ([ `uname` == "Darwin" ])
+then
+    # Mac laptop
+    JOBS_OPTS="--jobs=HOST_CPUS*0.5"
+else
+    # Anything else is assumed to be a VM
+    JOBS_OPTS=""
+fi
+
 # Aggregate options together so alias strings are shorter.
-# We used to set the "jobs" parameter, but recent versions of Bazel can set
-# that parameter correctly themselves.
-#BB_OPTS="--jobs=${NPROC} ${HACK_OPTS}"
-BB_OPTS="${HACK_OPTS}"
+BB_OPTS="${JOBS_OPTS} ${HACK_OPTS}"
 
 # Build target for pip package prereqs. You still need to run the
 # build_pip_package script after running this target; see bbpp below.
@@ -87,7 +96,8 @@ TEST_TARGET="${TEST_TARGET} -//tensorflow/python/debug:dist_session_debug_grpc_t
 TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:values_test"
 TEST_TARGET="${TEST_TARGET} -//tensorflow/python/autograph/pyct:inspect_utils_test_par"
 TEST_TARGET="${TEST_TARGET} -//tensorflow/examples/speech_commands:freeze_test"
-TEST_TARGET="${TEST_TARGET} -//tensorflow/core/kernels:eigen_mkldnn_contraction_kernel_test"
+#TEST_TARGET="${TEST_TARGET} -//tensorflow/core/kernels:eigen_mkldnn_contraction_kernel_test"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras:data_utils_test"
 #TEST_TARGET="${TEST_TARGET} -//tensorflow/core:platform_setround_test"
 #TEST_TARGET="${TEST_TARGET} -//tensorflow/core:platform_setround_test"
 #TEST_TARGET="${TEST_TARGET} -//tensorflow/python/autograph/pyct/..."
@@ -120,7 +130,7 @@ alias bbtt="time bazel test ${BB_OPTS} ${ADDL_HACK_OPTS} //tensorflow/contrib/..
 alias tff="clang-format -style=Google"
 
 # Quick and dirty Python linter.
-alias bbl="${TF_DEF_CONF}/pylint.sh"
+alias bbl="${TF_DEV_CONF}/pylint.sh"
 
 # Linter under Docker. This takes a while.
 BBD_COMMAND="time tensorflow/tools/ci_build/ci_build.sh CPU "
