@@ -8,6 +8,9 @@
 
 TF_DEV_CONF="${HOME}/tf-dev-conf"
 
+OS=`uname`
+CPU=`uname -p`
+
 # Create a local branch for working on a TF issue
 alias tfb="${TF_DEV_CONF}/branch.py -c"
 
@@ -36,10 +39,14 @@ HACK_OPTS="${HACK_OPTS} --config=opt"
 # On VMs, the number of detected CPUs is the number of cores. On bare metal,
 # the number of detected CPUs is the number of threads. Divide by 2 to avoid
 # thrashing when on bare metal. 
-if ([ `uname` == "Darwin" ])
+if ([ "${OS}" == "Darwin" ])
 then
     # Mac laptop
     JOBS_OPTS="--jobs=HOST_CPUS*0.5"
+elif ([ "${CPU}" == "s390x" ])
+then
+    # Mainframe. Assume Java is messed up
+    JOBS_OPTS="--host_javabase=@local_jdk//:jdk"
 else
     # Anything else is assumed to be a VM
     JOBS_OPTS=""
