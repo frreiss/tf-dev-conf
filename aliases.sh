@@ -107,12 +107,16 @@ TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras:data_utils_test"
 BBT_COMMAND="bazel test ${BB_OPTS} --notest_verbose_timeout_warnings --keep_going ${EXCLUDE_TESTS} -- ${TEST_TARGET} | tee test.out"
 alias bbt="time ${BBT_COMMAND}"
 
+# Run a single test case (test case name is first argument).
+alias bbt1="bazel test ${BB_OPTS}"
+
 # Version of bbt alias that uses the Google Docker image.
 # Useful when the build is broken for every platfrom except the Google Docker
 # image.
 alias bbtd="time tensorflow/tools/ci_build/ci_build.sh CPU ${BBT_COMMAND}"
 
 
+# OUTDATED:
 # Additional regression tests that Google runs on PRs
 # NOTE: You will need to do the following prereqs:
 # -- Download the Android SDK tools
@@ -120,11 +124,12 @@ alias bbtd="time tensorflow/tools/ci_build/ci_build.sh CPU ${BBT_COMMAND}"
 #    "build-tools" components of the android sdk
 # -- Download the Android NDK (currently version 16)
 # -- Install a nightly build of TF 
-ADDL_HACK_OPTS=""
-ADDL_HACK_OPTS="${ADDL_HACK_OPTS} --keep_going"
-ADDL_HACK_OPTS="${ADDL_HACK_OPTS} --build_tests_only"
-ADDL_HACK_OPTS="${ADDL_HACK_OPTS} --test_tag_filters=-no_oss,-oss_serial,-gpu,-benchmark-test"
-alias bbtt="time bazel test ${BB_OPTS} ${ADDL_HACK_OPTS} //tensorflow/contrib/..."
+#ADDL_HACK_OPTS=""
+#ADDL_HACK_OPTS="${ADDL_HACK_OPTS} --keep_going"
+#ADDL_HACK_OPTS="${ADDL_HACK_OPTS} --build_tests_only"
+#ADDL_HACK_OPTS="${ADDL_HACK_OPTS} --test_tag_filters=-no_oss,-oss_serial,-gpu,-benchmark-test"
+#alias bbtt="time bazel test ${BB_OPTS} ${ADDL_HACK_OPTS} //tensorflow/contrib/..."
+
 
 # Reformat a C++ file.
 alias tff="clang-format -style=Google"
