@@ -31,10 +31,12 @@ alias tfcc="conda activate tfbuild && bazel clean && yes '' | ./configure"
 # Extra Bazel options required to get the build to work on my machines.
 # These change regularly.
 HACK_OPTS=""
-HACK_OPTS="${HACK_OPTS} --config=opt"
-#HACK_OPTS="${HACK_OPTS} --config=xla"
-#HACK_OPTS="${HACK_OPTS} --define=grpc_no_ares=true"
-#HACK_OPTS="${HACK_OPTS} --incompatible_remove_native_http_archive=false"
+
+# TEMPORARY: Optimized builds segfault on my mac as of 9/24/2019
+# TODO: Re-enable the "opt" flag
+#HACK_OPTS="${HACK_OPTS} --config=opt"
+
+
 
 # On VMs, the number of detected CPUs is the number of cores. On bare metal,
 # the number of detected CPUs is the number of threads. Divide by 2 to avoid
@@ -93,7 +95,7 @@ alias bbpp="rm -rf ${PKG_DIR} && ./bazel-bin/tensorflow/tools/pip_package/build_
 TEST_TARGET="//tensorflow/..."
 TEST_TARGET="${TEST_TARGET} -//tensorflow/compiler/..."
 TEST_TARGET="${TEST_TARGET} -//tensorflow/lite/..."
-TEST_TARGET="${TEST_TARGET} -//tensorflow/contrib/..."
+#TEST_TARGET="${TEST_TARGET} -//tensorflow/contrib/..."
 
 # Tests that are consistently flaky on my machines
 TEST_TARGET="${TEST_TARGET} -//tensorflow/python/tpu:tpu_test"
