@@ -1,5 +1,5 @@
 ################################################################################
-# Fred's bash aliases for TensorFlow development
+# Fred's bash/zsh aliases for TensorFlow development
 #
 # To activate the aliases in this file file, run 
 #   . ~/tf-def-conf/aliases.sh
@@ -41,11 +41,11 @@ HACK_OPTS=""
 # On VMs, the number of detected CPUs is the number of cores. On bare metal,
 # the number of detected CPUs is the number of threads. Divide by 2 to avoid
 # thrashing when on bare metal. 
-if ([ "${OS}" == "Darwin" ])
+if [[ "${OS}" == "Darwin" ]]
 then
     # Mac laptop
     JOBS_OPTS="--jobs=HOST_CPUS*0.5"
-elif ([ "${CPU}" == "s390x" ])
+elif [[ "${CPU}" == "s390x" ]]
 then
     # Mainframe. Assume Java is messed up
     JOBS_OPTS="--host_javabase=@local_jdk//:jdk"
