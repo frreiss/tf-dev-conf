@@ -63,8 +63,8 @@ conda install -y scikit-learn
 
 # Requirements that are installed from pip so we can avoid pulling in
 # dependencies. Use the specific versions that the TF Docker images use
-pip install keras_applications==1.0.6 --no-deps
-pip install keras_preprocessing==1.0.5 --no-deps
+pip install keras_applications==1.0.8 --no-deps
+pip install keras_preprocessing==1.1.0 --no-deps
 pip install tf-estimator-nightly --no-deps 
 
 
