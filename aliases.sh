@@ -113,7 +113,9 @@ TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras:data_utils_test"
 
 
 # Note that output is teed to a file in case we exceed the screen buffer.
-BBT_COMMAND="bazel test ${BB_OPTS} --notest_verbose_timeout_warnings --keep_going ${EXCLUDE_TESTS} -- ${TEST_TARGET} | tee test.out"
+# Or not -- Bazel doesn't like running with non-TTY output.
+#BBT_COMMAND="bazel test ${BB_OPTS} --notest_verbose_timeout_warnings --keep_going ${EXCLUDE_TESTS} -- ${TEST_TARGET} | tee test.out"
+BBT_COMMAND="bazel test ${BB_OPTS} --notest_verbose_timeout_warnings --keep_going ${EXCLUDE_TESTS} -- ${TEST_TARGET}"
 alias bbt="time ${BBT_COMMAND}"
 
 # Run a single test case (test case name is first argument).
@@ -154,7 +156,8 @@ alias bbd=$BBD_COMMAND
 
 # Full CI suite from within Google Docker image.
 # Doesn't currently work on laptop.
-alias bbdd="time tensorflow/tools/ci_build/ci_build.sh CPU bazel test //tensorflow/python/... 2>&1 | tee test.out"
+#alias bbdd="time tensorflow/tools/ci_build/ci_build.sh CPU bazel test //tensorflow/python/... 2>&1 | tee test.out"
+alias bbdd="time tensorflow/tools/ci_build/ci_build.sh CPU bazel test //tensorflow/python/..."
 
 # Build API documentation, OLD VERSION
 # Must be run from (tensorflow root)/tensorflow
