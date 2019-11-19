@@ -26,7 +26,8 @@ _N_CORES=`getconf _NPROCESSORS_ONLN`
 # like symlinks.
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-PYLINTRC_FILE="./tensorflow/tools/ci_build/pylintrc"
+PYLINTRC_FILE="${PWD}/tensorflow/tools/ci_build/pylintrc"
+PYLINT_BIN="pylint"
 
 ################################################################################
 # FUNCTIONS
