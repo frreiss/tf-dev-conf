@@ -11,7 +11,7 @@
 # location of the root of your anaconda/miniconda distribution.
 ################################################################################
 
-PYTHON_VERSION=3.6
+PYTHON_VERSION=3.7
 
 ENV_NAME="tfbuild"
 
@@ -26,7 +26,13 @@ then
     echo "Error: CONDA_HOME not set"
     exit
 fi
-. ${CONDA_HOME}/etc/profile.d/conda.sh
+if [ -e "${CONDA_HOME}/etc/profile.d/conda.sh" ]
+then
+    . ${CONDA_HOME}/etc/profile.d/conda.sh
+else
+    echo "${CONDA_HOME} does not appear to be set up properly"
+    exit
+fi
 # END HACK
 ############################
 
@@ -43,10 +49,11 @@ conda create -y --name ${ENV_NAME} \
 
 conda activate ${ENV_NAME}
 
-# Install unofficial requirements, i.e. not mentioned in the docs, but tests
-# will fail without them.
+
+# Install unofficial test requirements, i.e. not mentioned in the docs, but 
+# tests will fail without them.
 # TODO: Revisit these periodically
-conda install -y portpicker grpcio scipy h5py
+conda install -y portpicker grpcio scipy h5py six
 
     #keras-applications keras-preprocessing 
     #-c conda-forge

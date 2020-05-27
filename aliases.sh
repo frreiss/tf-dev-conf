@@ -44,7 +44,7 @@ HACK_OPTS=""
 if [[ "${OS}" == "Darwin" ]]
 then
     # Mac laptop
-    JOBS_OPTS="--jobs=HOST_CPUS*0.5"
+    JOBS_OPTS="--jobs='HOST_CPUS*0.5'"
 elif [[ "${CPU}" == "s390x" ]]
 then
     # Mainframe. Assume Java is messed up
@@ -111,12 +111,21 @@ TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras:data_utils_test"
 #TEST_TARGET="${TEST_TARGET} -//tensorflow/core:platform_setround_test"
 #TEST_TARGET="${TEST_TARGET} -//tensorflow/python/autograph/pyct/..."
 
-
-# Note that output is teed to a file in case we exceed the screen buffer.
-# Or not -- Bazel doesn't like running with non-TTY output.
-#BBT_COMMAND="bazel test ${BB_OPTS} --notest_verbose_timeout_warnings --keep_going ${EXCLUDE_TESTS} -- ${TEST_TARGET} | tee test.out"
 BBT_COMMAND="bazel test ${BB_OPTS} --notest_verbose_timeout_warnings --keep_going ${EXCLUDE_TESTS} -- ${TEST_TARGET}"
 alias bbt="time ${BBT_COMMAND}"
+
+# Run tests of TensorFlow Lite
+# Disables tests that won't run without a full Android development environment
+LITE_TEST_TARGET="//tensorflow/lite/..."
+LITE_TEST_TARGET="${LITE_TEST_TARGET} -//tensorflow/lite/experimental/..."
+LITE_TEST_TARGET="${LITE_TEST_TARGET} -//tensorflow/lite/java/..."
+
+# Person detection test for TensorFlow Lite is broken 
+LITE_TEST_TARGET="${LITE_TEST_TARGET} -//tensorflow/lite/micro/examples/person_detection/..."
+LITE_TEST_TARGET="${LITE_TEST_TARGET} -//tensorflow/lite/micro/examples/person_detection_experimental/..."
+
+BBTL_COMMAND="bazel test ${BB_OPTS} --notest_verbose_timeout_warnings --keep_going -- ${LITE_TEST_TARGET}"
+alias bbtl="time ${BBTL_COMMAND}"
 
 # Run a single test case (test case name is first argument).
 alias bbt1="bazel test ${BB_OPTS}"
