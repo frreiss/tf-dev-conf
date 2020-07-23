@@ -93,9 +93,16 @@ alias bbpp="rm -rf ${PKG_DIR} && ./bazel-bin/tensorflow/tools/pip_package/build_
 #EXCLUDE_TESTS="${EXCLUDE_TESTS} --test_size_filters=small,medium"
 
 TEST_TARGET="//tensorflow/..."
+
+# Tests specifically enabled on Google's CI builds
+TEST_TARGET="${TEST_TARGET} //tensorflow/compiler/mlir/lite/..."
+
+# Tests disabled on Google's CI builds
 TEST_TARGET="${TEST_TARGET} -//tensorflow/compiler/..."
 TEST_TARGET="${TEST_TARGET} -//tensorflow/lite/..."
-#TEST_TARGET="${TEST_TARGET} -//tensorflow/contrib/..."
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/integration_testing/..."
+TEST_TARGET="${TEST_TARGET} -//tensorflow/compiler/tf2tensorrt/..."
+TEST_TARGET="${TEST_TARGET} -//tensorflow/compiler/xrt/..."
 
 # Tests that are consistently flaky on my machines
 TEST_TARGET="${TEST_TARGET} -//tensorflow/python/tpu:tpu_test"
@@ -105,11 +112,9 @@ TEST_TARGET="${TEST_TARGET} -//tensorflow/python/debug:dist_session_debug_grpc_t
 TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:values_test"
 TEST_TARGET="${TEST_TARGET} -//tensorflow/python/autograph/pyct:inspect_utils_test_par"
 TEST_TARGET="${TEST_TARGET} -//tensorflow/examples/speech_commands:freeze_test"
-#TEST_TARGET="${TEST_TARGET} -//tensorflow/core/kernels:eigen_mkldnn_contraction_kernel_test"
 TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras:data_utils_test"
-#TEST_TARGET="${TEST_TARGET} -//tensorflow/core:platform_setround_test"
-#TEST_TARGET="${TEST_TARGET} -//tensorflow/core:platform_setround_test"
-#TEST_TARGET="${TEST_TARGET} -//tensorflow/python/autograph/pyct/..."
+
+
 
 BBT_COMMAND="bazel test ${BB_OPTS} --notest_verbose_timeout_warnings --keep_going ${EXCLUDE_TESTS} -- ${TEST_TARGET}"
 alias bbt="time ${BBT_COMMAND}"
@@ -119,6 +124,7 @@ alias bbt="time ${BBT_COMMAND}"
 LITE_TEST_TARGET="//tensorflow/lite/..."
 LITE_TEST_TARGET="${LITE_TEST_TARGET} -//tensorflow/lite/experimental/..."
 LITE_TEST_TARGET="${LITE_TEST_TARGET} -//tensorflow/lite/java/..."
+LITE_TEST_TARGET="${LITE_TEST_TARGET} -//tensorflow/delegates/gpu/..."
 
 # Person detection test for TensorFlow Lite is broken 
 LITE_TEST_TARGET="${LITE_TEST_TARGET} -//tensorflow/lite/micro/examples/person_detection/..."
