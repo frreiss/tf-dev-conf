@@ -142,6 +142,31 @@ TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/distribute:saved_model_mi
 TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/distribute:keras_save_load_test_tpu"
 TEST_TARGET="${TEST_TARGET} -//tensorflow/python/tpu:tpu_embedding_v2_test"
 TEST_TARGET="${TEST_TARGET} -//tensorflow/python/tpu:tpu_embedding_v2_correctness_test"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/distribute:keras_utils_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/distribute:keras_stateful_lstm_model_correctness_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/distribute:keras_dnn_correctness_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/distribute:keras_embedding_model_correctness_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:strategy_common_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/tpu:async_checkpoint_test"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/layers/preprocessing:discretization_distribution_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/distribute:step_fn_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/distribute:keras_metrics_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/distribute:custom_training_loop_optimizer_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/distribute:custom_training_loop_metrics_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/distribute:checkpointing_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/eager:remote_cloud_tpu_test"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/eager:remote_cloud_tpu_pod_test"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute/integration_test:saved_model_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:tf_function_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:strategy_reduce_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:strategy_combinations_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:moving_averages_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:metrics_v1_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:custom_training_loop_gradient_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:checkpointing_test_tpu"
+
+
+
 
 #TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras:data_utils_test"
 
