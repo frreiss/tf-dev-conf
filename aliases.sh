@@ -164,6 +164,7 @@ TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:moving_averages_test
 TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:metrics_v1_test_tpu"
 TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:custom_training_loop_gradient_test_tpu"
 TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:checkpointing_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/tools/api/tests:module_test"
 
 
 
