@@ -15,7 +15,7 @@
 # location of the root of your anaconda/miniconda distribution.
 ################################################################################
 
-PYTHON_VERSION=3.6
+PYTHON_VERSION=3.7
 
 ############################
 # HACK ALERT *** HACK ALERT 

@@ -64,6 +64,27 @@ TF_PIP_TARGET=//tensorflow/tools/pip_package:build_pip_package
 # Create the materials to create a Pip package
 alias bbp="bazel build ${BB_OPTS} ${TF_PIP_TARGET}"
 
+# A version of bbp that compiles with debug symbols
+alias bbpdbg="bazel build --compilation_mode dbg -c dbg --strip=never ${JOBS_OPTS} ${TF_PIP_TARGET}"
+
+# Build the pip package from within a Docker container. Useless for creating an
+# installable pip package, but useful for when the build is broken on
+# everything except for Google's Docker image. Very slow on Mac.
+alias bbpd="tensorflow/tools/ci_build/ci_build.sh CPU bazel build ${BB_OPTS} ${TF_PIP_TARGET}"
+
+
+# Actually build the pip package (need to run bbp first)
+PKG_DIR="./pip_package"
+alias bbpp="rm -rf ${PKG_DIR} && ./bazel-bin/tensorflow/tools/pip_package/build_pip_package ${PKG_DIR}"
+
+# Local regression tests
+
+# Exclusions now commented out because the configure script now sets them
+# up properly.
+# Config mostly cribbed from Google's Ubuntu CI config
+#TEST_FILTERS="-no_oss,-oss_serial,-gpu,-benchmark-test"
+#if ([ `uname` == "Darwin" ])
+
 # Version of bbp that builds a TensorFlow 2.x pip package
 alias bbp2="bazel build ${BB_OPTS} --config=v2 ${TF_PIP_TARGET}"
 
@@ -112,7 +133,17 @@ TEST_TARGET="${TEST_TARGET} -//tensorflow/python/debug:dist_session_debug_grpc_t
 TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:values_test"
 TEST_TARGET="${TEST_TARGET} -//tensorflow/python/autograph/pyct:inspect_utils_test_par"
 TEST_TARGET="${TEST_TARGET} -//tensorflow/examples/speech_commands:freeze_test"
-TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras:data_utils_test"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/distribute:keras_image_model_correctness_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/distribute:ctl_correctness_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:input_lib_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/distribute:input_lib_type_spec_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/distribute:saved_model_save_load_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/distribute:saved_model_mixed_api_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras/distribute:keras_save_load_test_tpu"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/tpu:tpu_embedding_v2_test"
+TEST_TARGET="${TEST_TARGET} -//tensorflow/python/tpu:tpu_embedding_v2_correctness_test"
+
+#TEST_TARGET="${TEST_TARGET} -//tensorflow/python/keras:data_utils_test"
 
 
 
